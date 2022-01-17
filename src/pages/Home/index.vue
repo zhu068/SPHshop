@@ -1,0 +1,57 @@
+<template>
+  <div>
+    <!-- 全局的三级菜单 -->
+    <typeNav />
+    <ListContainer />
+    <Recommend />
+    <Rank />
+    <Like />
+    <!-- Floor这个组件：自己在组件内部是没有发请求的，数据是父组件给的 -->
+    <!-- <Floor v-for="(floor,index) in floorList" :key="floor.id" :list="floor"/> -->
+    <Floor />
+    <Brand />
+    <!-- <Footer/> -->
+  </div>
+</template>
+
+<script>
+//非路由组件在使用的时候分为三大步：定义、注册、使用
+import ListContainer from "./ListContainer";
+import Recommend from "./Recommend";
+import Rank from "./Rank";
+import Like from "./Like";
+import Brand from "./Brand";
+import Floor from "./Floor";
+import { mapState } from "vuex";
+
+export default {
+  name: "",
+  components: {
+    ListContainer,
+    Recommend,
+    Rank,
+    Like,
+    Brand,
+    Floor
+  },
+  mounted() {
+    //派发action,获取floor组件的数据
+    // this.$store.dispatch("getFloorList");
+    this.$store.dispatch('getUserInfo');
+   console.log('huoqu',this.message);
+  },
+  computed: {
+    ...mapState({
+      floorList: (state) => state.home.floorList,
+      message:(state)=> state.home.message
+    }),
+  },
+  // watch:{
+  //   list:{
+  //     immediate:true
+  //   }
+  // }
+};
+</script>
+
+<style scoped></style>
